@@ -1,0 +1,34 @@
+{
+  "name": "@dataparty/bouncer-model",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Bouncer default actor models",
+  "author": "RosHub Inc. <code@roshub.io>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datapartyjs/bouncer-model.git"
+  },
+  "main": "src/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/roshub-model.json > /dev/null",
+    "postinstall": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/roshub-model.json > /dev/null"
+  },
+  "dependencies": {
+    "@octokit/rest": "16.23.2",
+    "crypto-random-string": "^3.0.0",
+    "debug": "^3.1.0",
+    "deep-set": "^1.0.1",
+    "hoek": "^5.0.3",
+    "json-schema-to-typescript": "^6.0.2",
+    "moment": "^2.22.1",
+    "mongoose": "5.7.5",
+    "mongoose-schema-jsonschema": "1.2.1"
+  }
+}
