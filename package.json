@@ -28,7 +28,7 @@
     "hoek": "^5.0.3",
     "json-schema-to-typescript": "^6.0.2",
     "moment": "^2.22.1",
-    "mongoose": "5.7.5",
+    "mongoose": "5.7.7",
     "mongoose-schema-jsonschema": "1.2.1"
   }
 }
