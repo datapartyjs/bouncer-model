@@ -1,7 +1,7 @@
 {
   "name": "@dataparty/bouncer-model",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bouncer default actor models",
   "author": "RosHub Inc. <code@roshub.io>",
   "license": "Apache-2.0",
@@ -17,8 +17,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
-    "build": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/roshub-model.json > /dev/null",
-    "postinstall": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/roshub-model.json > /dev/null"
+    "build": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/bouncer-model.json > /dev/null",
+    "postinstall": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/bouncer-model.json > /dev/null"
   },
   "dependencies": {
     "@octokit/rest": "16.23.2",
