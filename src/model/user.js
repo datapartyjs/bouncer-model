@@ -1,6 +1,6 @@
 'use strict';
 
-const Hoek = require('hoek')
+const Hoek = require('@hapi/hoek')
 const mongoose = require("mongoose")
 require("mongoose-schema-jsonschema")(mongoose)
 const debug = require('debug')('bouncer.model.user')

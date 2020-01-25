@@ -1,6 +1,6 @@
 {
   "name": "@dataparty/bouncer-model",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "Bouncer default actor models",
   "author": "RosHub Inc. <code@roshub.io>",
   "license": "Apache-2.0",
@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@hapi/bossy": "^5.0.0",
+    "@hapi/hoek": "^9.0.2",
     "@octokit/rest": "16.23.2",
     "crypto-random-string": "^3.0.0",
     "debug": "^3.1.0",
     "deep-set": "^1.0.1",
-    "hoek": "^5.0.3",
     "json-schema-to-typescript": "^6.0.2",
     "mkdirp": "^1.0.3",
     "moment": "^2.22.1",
