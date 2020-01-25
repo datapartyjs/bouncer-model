@@ -1,0 +1,76 @@
+#!/usr/bin/env node
+
+const Path = require('path')
+const mkdirp = require('mkdirp')
+const Bossy = require('@hapi/bossy')
+const buildModel = require('../src/build-model')
+
+const Usage = `bouncer-model-build --name <MODEL_NAME> --model <MODEL_PATH> --output <OUTPUT_DIR>`
+
+const Definition = {
+  n: {
+    description: 'Model name',
+    alias: 'name',
+    type: 'string',
+    require: true
+  },
+  m: {
+    description: 'Model .js file path',
+    alias: 'model',
+    type: 'string',
+    require: true,
+    default: './src/index.js'
+  },
+  o: {
+    description: 'Output directory',
+    alias: 'output',
+    type: 'string',
+    require: true,
+    default: 'dist/'
+  }
+}
+
+
+async function main(argv){
+  
+  const parsed = Bossy.parse(Definition, {argv})
+  
+  if(parsed instanceof Error){
+    throw new Error('UsageError')
+  }
+  
+  const modelPath = Path.isAbsolute(parsed.model) ? parsed.model : Path.join(process.cwd(), parsed.model)
+  
+  const outputPath = Path.isAbsolute(parsed.output) ? parsed.output : Path.join(process.cwd(), parsed.output)
+  
+  await mkdirp(outputPath)
+  
+  const compiled = await buildModel({
+    name: parsed.name,
+    modelPath,
+    outputPath
+  })
+  
+  console.log('compiled', compiled.Api.length, 'models to ->', compiled.SchemePath)
+}
+
+// Run main
+main(process.args).catch((error) => {
+
+  let content = ''
+
+  if(error instanceof Error){ content += error.name + ' - ' + error.message + '\n\n'}
+
+  content += Bossy.usage(Definition, Usage)
+  
+  console.log(content)
+  
+  if(process.send){
+    process.send({
+      error: error,
+      output: content
+    })
+  }
+  
+  process.exit()
+})

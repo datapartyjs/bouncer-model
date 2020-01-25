@@ -1,6 +1,5 @@
 {
   "name": "@dataparty/bouncer-model",
-  "private": false,
   "version": "1.0.1",
   "description": "Bouncer default actor models",
   "author": "RosHub Inc. <code@roshub.io>",
@@ -14,19 +13,23 @@
     "dist",
     "src"
   ],
+  "bin": {
+    "bouncer-model-build": "./bin/bouncer-model-build"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
-    "build": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/bouncer-model.json > /dev/null",
-    "postinstall": "mkdir -p dist; npx -q ./src/build-model.js | tee  ./dist/bouncer-model.json > /dev/null"
+    "build": "bouncer-model-build --name bouncer"
   },
   "dependencies": {
+    "@hapi/bossy": "^5.0.0",
     "@octokit/rest": "16.23.2",
     "crypto-random-string": "^3.0.0",
     "debug": "^3.1.0",
     "deep-set": "^1.0.1",
     "hoek": "^5.0.3",
     "json-schema-to-typescript": "^6.0.2",
+    "mkdirp": "^1.0.3",
     "moment": "^2.22.1",
     "mongoose": "5.7.7",
     "mongoose-schema-jsonschema": "1.2.1"
