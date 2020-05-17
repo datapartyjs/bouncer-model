@@ -38,11 +38,6 @@ const buildModel = async function(
 
     debug('\t','type',model.Type)
 
-    const dumpPath = Path.join(outputPath, model.Type + '.dump.json')
-
-    fs.writeFileSync(dumpPath, JSON.stringify(schema,null,2))
-
-
     let indexed = JSONPath({
       path: '$..options.index',
       json:schema.paths,
