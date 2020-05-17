@@ -51,7 +51,7 @@ async function main(argv){
     outputPath
   })
   
-  console.log('compiled', compiled.Api.length, 'models to ->', compiled.SchemePath)
+  console.log('compiled', compiled.JSONSchema.length, 'models to ->', compiled.SchemePath)
 }
 
 // Run main

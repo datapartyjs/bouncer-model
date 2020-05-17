@@ -19,8 +19,8 @@ const buildModel = async function(
   const Model = require(modelPath)
 
   const output = {
-    Api: [],
-    Model: {}
+    JSONSchema: [],
+    IndexSettings: {}
   }
   
   const tsWrites = []
@@ -34,7 +34,7 @@ const buildModel = async function(
 
     jsonSchema.title = model.Type
 
-    output.Api.push(jsonSchema)
+    output.JSONSchema.push(jsonSchema)
 
     debug('\t','type',model.Type)
 
@@ -68,7 +68,7 @@ const buildModel = async function(
       unique: Hoek.reach(schema, '_indexes.0.1.unique')
     }
 
-    output.Model[model.Type] = {
+    output.IndexSettings[model.Type] = {
       indices: indexed,
       unique,
       compoundIndices
@@ -96,8 +96,9 @@ const buildModel = async function(
   
   return {
     SchemePath: jsonSchemaPath,
-    Api: output.Api,
     JSON: jsonSchemaStr,
+    JSONSchema: output.JSONSchema,
+    IndexSettings: output.IndexSettings,
     TypeScript: tsOutput
   }
 }
