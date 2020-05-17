@@ -1,6 +1,9 @@
 const fs = require('fs')
 const Path = require('path')
+const debug = require('debug')('build.model')
 const mongoose = require('mongoose')
+const Hoek = require('@hapi/hoek')
+const {JSONPath} = require('jsonpath-plus')
 require('mongoose-schema-jsonschema')(mongoose)
 const json2ts = require('json-schema-to-typescript')
 
@@ -16,7 +19,8 @@ const buildModel = async function(
   const Model = require(modelPath)
 
   const output = {
-    Api: []
+    Api: [],
+    Model: {}
   }
   
   const tsWrites = []
@@ -24,12 +28,56 @@ const buildModel = async function(
 
   for(let key in Model.Types){
     const model = Model.Types[key]
-    const schema = mongoose.Schema(model.Schema)
+    let schema = mongoose.Schema(model.Schema)
+    schema = model.setupSchema(schema)
     let jsonSchema = schema.jsonSchema()
 
     jsonSchema.title = model.Type
 
     output.Api.push(jsonSchema)
+
+    debug('\t','type',model.Type)
+
+    const dumpPath = Path.join(outputPath, model.Type + '.dump.json')
+
+    fs.writeFileSync(dumpPath, JSON.stringify(schema,null,2))
+
+
+    let indexed = JSONPath({
+      path: '$..options.index',
+      json:schema.paths,
+      resultType: 'pointer'
+    }).map(p=>{return p.split('/')[1]})
+
+    debug('\t\tindexed', indexed)
+
+    let unique = JSONPath({
+      path: '$..options.unique',
+      json:schema.paths,
+      resultType: 'pointer'
+    }).map(p=>{
+      debug(typeof p)
+      if(typeof p == 'string'){
+        return p.split('/')[1]
+      }
+      
+      return p
+    })
+
+    debug('\t\tunique', unique)
+
+    debug('\t\tindexes', schema._indexes)
+
+    let compoundIndices = {
+      indices: Hoek.reach(schema, '_indexes.0.0'),
+      unique: Hoek.reach(schema, '_indexes.0.1.unique')
+    }
+
+    output.Model[model.Type] = {
+      indices: indexed,
+      unique,
+      compoundIndices
+    }
 
     if(buildTypeScript){
       

@@ -19,7 +19,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
-    "build": "bouncer-model-build --name bouncer"
+    "build": "./bin/bouncer-model-build --name bouncer"
   },
   "dependencies": {
     "@hapi/bossy": "^5.0.0",
@@ -29,6 +29,7 @@
     "debug": "^3.1.0",
     "deep-set": "^1.0.1",
     "json-schema-to-typescript": "^6.0.2",
+    "jsonpath-plus": "^0.20.1",
     "mkdirp": "^1.0.3",
     "moment": "^2.22.1",
     "mongoose": "5.7.7",
