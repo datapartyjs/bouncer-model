@@ -1,16 +1,22 @@
 const fs = require('fs')
 const Path = require('path')
+const pify = require('pify')
 const debug = require('debug')('build.model')
 const mongoose = require('mongoose')
+
 const Hoek = require('@hapi/hoek')
+const gitRefs = require('git-refs')
 const {JSONPath} = require('jsonpath-plus')
 require('mongoose-schema-jsonschema')(mongoose)
 const json2ts = require('json-schema-to-typescript')
 
 
+
 const buildModel = async function(
   {
     name,
+    pkgPath,
+    gitPath,
     modelPath='./index.js',
     outputPath='./dist',
     buildTypeScript=true
@@ -20,9 +26,25 @@ const buildModel = async function(
 
   const output = {
     JSONSchema: [],
-    IndexSettings: {}
+    IndexSettings: {},
+    Package: {}
   }
   
+  if(pkgPath){
+    debug('loading pkg', pkgPath)
+
+    const pkg = require(pkgPath)
+
+    output.Package.name = pkg.name
+    output.Package.version = pkg.version
+  }
+
+  if(gitPath){
+    const refs = await pify( gitRefs ) (gitPath)
+
+    output.Package.githash = refs.HEAD
+  }
+
   const tsWrites = []
   const tsOutput = {}
 
