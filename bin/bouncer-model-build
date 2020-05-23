@@ -5,14 +5,15 @@ const mkdirp = require('mkdirp')
 const Bossy = require('@hapi/bossy')
 const buildModel = require('../src/build-model')
 
-const Usage = `bouncer-model-build --name <MODEL_NAME> --model <MODEL_PATH> --output <OUTPUT_DIR>`
+const Usage = `bouncer-model-build --name <MODEL_NAME> --model <MODEL_PATH> --output <OUTPUT_DIR> --pkg <PACKAGE_PATH>`
 
 const Definition = {
-  n: {
-    description: 'Model name',
-    alias: 'name',
+  g: {
+    description: 'Path to .git folder',
+    alias: 'git',
     type: 'string',
-    require: true
+    require: false,
+    default: '.git'
   },
   m: {
     description: 'Model .js file path',
@@ -21,12 +22,25 @@ const Definition = {
     require: true,
     default: './src/index.js'
   },
+  n: {
+    description: 'Model name',
+    alias: 'name',
+    type: 'string',
+    require: true
+  },
   o: {
     description: 'Output directory',
     alias: 'output',
     type: 'string',
     require: true,
     default: 'dist/'
+  },
+  p: {
+    description: 'Path to package.json file',
+    alias: 'pkg',
+    type: 'string',
+    require: false,
+    default: './package.json'
   }
 }
 
@@ -39,6 +53,10 @@ async function main(argv){
     throw new Error('UsageError')
   }
   
+  const pkgPath = Path.isAbsolute(parsed.pkg) ? parsed.pkg : Path.join(process.cwd(), parsed.pkg)
+
+  const gitPath = Path.isAbsolute(parsed.git) ? parsed.git : Path.join(process.cwd(), parsed.git)
+
   const modelPath = Path.isAbsolute(parsed.model) ? parsed.model : Path.join(process.cwd(), parsed.model)
   
   const outputPath = Path.isAbsolute(parsed.output) ? parsed.output : Path.join(process.cwd(), parsed.output)
@@ -47,6 +65,8 @@ async function main(argv){
   
   const compiled = await buildModel({
     name: parsed.name,
+    pkgPath,
+    gitPath,
     modelPath,
     outputPath
   })
