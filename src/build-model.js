@@ -25,9 +25,10 @@ const buildModel = async function(
   const Model = require(modelPath)
 
   const output = {
-    JSONSchema: [],
+    Package: {},
     IndexSettings: {},
-    Package: {}
+    JSONSchema: [],
+    Permissions: {}
   }
   
   if(pkgPath){
@@ -56,6 +57,7 @@ const buildModel = async function(
 
     jsonSchema.title = model.Type
 
+    output.Permissions[model.Type] = await model.permissions()
     output.JSONSchema.push(jsonSchema)
 
     debug('\t','type',model.Type)
