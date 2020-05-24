@@ -107,3 +107,4 @@ exports.objRef = function(doc, subpath=undefined, options={}){
     type: Hoek.reach(doc, typePath) || options.type
   }
 }
+
