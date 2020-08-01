@@ -1,7 +1,7 @@
-const debug = require('debug')('bouncer.Model')
+const debug = require('debug')('bouncer.ISchema')
 
 
-module.exports = class Model {
+module.exports = class ISchema {
   constructor(){ }
 
   static install(mongoose){
@@ -47,7 +47,7 @@ module.exports = class Model {
 
   static generate({JSONSchema, IndexSettings, Permissions}){
 
-    return class GenericModel extends Model {
+    return class GenericModel extends Schema {
     
       static get Schema(){
         return {

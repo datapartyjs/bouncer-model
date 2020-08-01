@@ -7,7 +7,7 @@ const TYPES = {
   Identity: require('./model/identity')
 }
 
-const Model = require('./model')
+const Model = require('./itype')
 
 exports.Model = Model
 exports.Types = TYPES

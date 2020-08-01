@@ -5,7 +5,7 @@ require("mongoose-schema-jsonschema")(mongoose)
 const debug = require("debug")("bouncer.model.identity")
 
 const Utils = require('../utils')
-const Model = require('../model.js')
+const Model = require('../itype.js')
 
 class Identity extends Model {
 

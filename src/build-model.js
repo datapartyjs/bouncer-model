@@ -28,7 +28,13 @@ const buildModel = async function(
     Package: {},
     IndexSettings: {},
     JSONSchema: [],
-    Permissions: {}
+    Permissions: {},
+    Code: {
+      Types: {},
+      Documents: {},
+      Rest_Endpoints: {},
+      Rest_Middleware: {}
+    }
   }
   
   if(pkgPath){

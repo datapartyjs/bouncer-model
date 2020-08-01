@@ -5,7 +5,7 @@ const Hoek = require('@hapi/hoek')
 const debug = require('debug')('bouncer.model.acl')
 
 const Utils = require('../utils')
-const Model = require('../model.js')
+const Model = require('../itype.js')
 
 class Acl extends Model {
   static get Type () { return 'acl' }

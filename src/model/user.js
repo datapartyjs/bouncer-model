@@ -6,7 +6,7 @@ require("mongoose-schema-jsonschema")(mongoose)
 const debug = require('debug')('bouncer.model.user')
 
 const Utils = require('../utils')
-const Model = require('../model.js')
+const Model = require('../itype.js')
 
 
 

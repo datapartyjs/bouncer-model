@@ -2,7 +2,7 @@
 
 
 const Utils = require('../utils')
-const Model = require('../model.js')
+const Model = require('../itype.js')
 
 class Device extends Model {
 
