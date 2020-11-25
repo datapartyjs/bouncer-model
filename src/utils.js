@@ -48,7 +48,7 @@ exports.actor = function(types){
   let defaultVal = undefined
   if(!Array.isArray(types)){
     types = [types]
-    defaultVal = types
+    defaultVal = types[0]
   }
   
   return {
