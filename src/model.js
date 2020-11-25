@@ -2,12 +2,7 @@ const debug = require('debug')('bouncer.Model')
 
 
 module.exports = class Model {
-  super(){
-    /*
-    this.ownerFields = ['owner', 'admins']
-    this.memberFields = ['members', 'devices']
-    */
-  }
+  constructor(){ }
 
   static install(mongoose){
     debug('install - ', this.Type)
@@ -46,7 +41,27 @@ module.exports = class Model {
    * Collection level read/new/change permissions
    * @param {*} context 
    */
-  static permissions(context){
+  static async permissions(context){
     throw new Error('not implemented')
+  }
+
+  static generate({JSONSchema, IndexSettings, Permissions}){
+
+    return class GenericModel extends Model {
+    
+      static get Schema(){
+        return {
+          'ajv-schema': JSONSchema
+        }
+      }
+  
+      static get Type(){
+        return JSONSchema.title
+      }
+    
+      static async permissions(){
+        return Permissions
+      }
+    }
   }
 }

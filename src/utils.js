@@ -1,5 +1,5 @@
 'use strict';
-const Hoek = require('hoek')
+const Hoek = require('@hapi/hoek')
 const mongoose = require('mongoose')
 
 
@@ -107,3 +107,4 @@ exports.objRef = function(doc, subpath=undefined, options={}){
     type: Hoek.reach(doc, typePath) || options.type
   }
 }
+
